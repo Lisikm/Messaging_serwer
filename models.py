@@ -100,7 +100,54 @@ class User:
         self._id = None
         return True
 
+class Messages:
+    db_name = 'test1'
 
+    def __init__(self, from_id, to_id, text):
+        self.from_id = from_id
+        self.to_id = to_id
+        self.text = text
+        self._id = None
+        self.creation_data = None
+
+    @property
+    def id(self):
+        return self._id
+
+    def save_to_db(self):
+        conn = connect(User.db_name)
+        cursor = conn.cursor()
+        if self._id is None:
+            sql = f"""
+            INSERT INTO messages (from_id, to_id, text) VALUES ('{self.from_id}', '{self.to_id}','{self.text}')
+            """
+            cursor.execute(sql)
+        else:
+            sql = f"""
+            UPDATE messages SET from_id='{self.from_id}', to_id='{self.to_id}', text='{self.text}' WHERE id={self.id}
+            """
+            cursor.execute(sql)
+        conn.close()
+        return True
+
+    @staticmethod
+    def load_all_messages():
+        conn = connect(User.db_name)
+        cursor = conn.cursor()
+        sql = f"""
+                        SELECT * FROM messages
+                        """
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        print(data)
+        loaded_messages = []
+        if data:
+            for elem in data:
+                loaded_message = Messages(elem[1],elem[2],elem[3])
+                loaded_message._id = elem[0]
+                loaded_message.creation_data = elem[4]
+                loaded_messages.append(loaded_message)
+        return loaded_messages
 
 
 if __name__ == '__main__':

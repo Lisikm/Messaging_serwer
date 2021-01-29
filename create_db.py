@@ -28,7 +28,7 @@ def db_tables_creation(db_name):
     from_id integer,
     to_id integer,
     text varchar(255),
-    creation_date timestamp,
+    creation_date timestamp default current_timestamp,
     PRIMARY KEY (id),
     foreign key (from_id) REFERENCES users(id),
     foreign key (to_id) REFERENCES users(id));
