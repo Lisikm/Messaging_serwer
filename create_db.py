@@ -20,13 +20,14 @@ def db_tables_creation(db_name):
     sql = """
     CREATE TABLE users(
     id serial,
-    username varchar(255),
+    username varchar(255) unique,
     hashed_password varchar(80),
     PRIMARY KEY (id)
     );
     CREATE TABLE messages(    id serial,
     from_id integer,
     to_id integer,
+    text varchar(255),
     creation_date timestamp,
     PRIMARY KEY (id),
     foreign key (from_id) REFERENCES users(id),
@@ -37,4 +38,4 @@ def db_tables_creation(db_name):
 
 
 if __name__ == '__main__':
-    a = db_tables_creation('test1')
+     a = db_tables_creation('test1')
