@@ -139,7 +139,6 @@ class Messages:
                         """
         cursor.execute(sql)
         data = cursor.fetchall()
-        print(data)
         loaded_messages = []
         if data:
             for elem in data:
