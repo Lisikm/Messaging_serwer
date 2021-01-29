@@ -2,6 +2,31 @@ from models import User, Messages
 from clcrypto import check_password
 
 
+def message_support():
+    while True:
+        decision = int(input("""Write numer of fuction you want to choose:
+        1 - Message list
+        2 - Send message
+        3 - Exit
+        """))
+        if decision == 3:
+            break
+        if decision == 1:
+            username = input("Write username: ")
+            password = input("Write password: ")
+            reply = message_support_message_list(username, password)
+            print(reply)
+        if decision == 2:
+            while True:
+                username = input("Write username: ")
+                password = input("Write password: ")
+                to = input("Write username you want to send message: ")
+                text = input("Write message (max 255 signs): ")
+                reply = message_support_send_message(username, password, to, text)
+                print(reply)
+                if reply == "Message sent":
+                    break
+
 def message_support_message_list(username, password):
     users = User.load_all_users()
     user = None
@@ -47,3 +72,4 @@ def message_support_send_message(username, password, to, text):
 
 
 if __name__ == '__main__':
+    pass

@@ -2,6 +2,46 @@ from models import User
 from clcrypto import check_password
 
 
+def user_support():
+    while True:
+        decision = int(input("""Write numer of fuction you want to choose:
+        1 - Add user
+        2 - Password edit
+        3 - Delete user
+        4 - Users list
+        5 - Exit
+        """))
+        if decision == 5:
+            break
+        elif decision == 1:
+            while True:
+                username = input("Write username: ")
+                password = input("Write password: ")
+                reply = user_support_add_user(username, password)
+                print(reply)
+                if reply == "You did it":
+                    break
+        elif decision == 2:
+            while True:
+                username = input("Write username: ")
+                password = input("Write password: ")
+                new_pass = input("Write new password: ")
+                reply = user_support_password_edit(username, password, new_pass)
+                print(reply)
+                if reply == "You did it":
+                    break
+        elif decision == 3:
+            while True:
+                username = input("Write username: ")
+                password = input("Write password: ")
+                reply = user_support_delete_user(username, password)
+                print(reply)
+                if reply == "You deleted yourself":
+                    break
+        elif decision == 4:
+            print(user_support_users_list())
+
+
 def user_support_add_user(username, password):
     users = User.load_all_users()
     for user in users:
